@@ -7,7 +7,6 @@ cron: 20 15 * * *
 
 const Env = require('./env');
 const { requestApi, getEnvCookies, wait, waitHuman } = require('./bot');
-const notify = require('./sendNotify');
 const { SmzdmTaskBot } = require('./library_task');
 
 // ------------------------------------
@@ -225,8 +224,6 @@ class SmzdmTestingTaskBot extends SmzdmTaskBot {
     return;
   }
 
-  let notifyContent = '';
-
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i];
 
@@ -245,14 +242,10 @@ class SmzdmTestingTaskBot extends SmzdmTaskBot {
     $.log(sep);
 
     const bot = new SmzdmTestingTaskBot(cookie);
-    const msg = await bot.run();
-
-    notifyContent += `${sep}${msg}\n`;
+    await bot.run();
   }
 
   $.log();
-
-  await notify.sendNotify($.name, notifyContent);
 })().catch((e) => {
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {

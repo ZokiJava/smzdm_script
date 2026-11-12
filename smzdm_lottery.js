@@ -14,7 +14,6 @@ const {
   wait,
   waitHuman
 } = require('./bot');
-const notify = require('./sendNotify');
 
 // ------------------------------------
 
@@ -183,8 +182,6 @@ class SmzdmLotteryBot extends SmzdmBot {
     return;
   }
 
-  let notifyContent = '';
-
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i];
 
@@ -203,14 +200,10 @@ class SmzdmLotteryBot extends SmzdmBot {
     $.log(sep);
 
     const bot = new SmzdmLotteryBot(cookie);
-    const msg = await bot.run();
-
-    notifyContent += sep + msg + '\n';
+    await bot.run();
   }
 
   $.log();
-
-  await notify.sendNotify($.name, notifyContent);
 })().catch((e) => {
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {

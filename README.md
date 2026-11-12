@@ -33,7 +33,7 @@
 ### 青龙拉库
 
 ```bash
-ql repo https://github.com/hex-ci/smzdm_script.git "smzdm_" "" "env.js|bot.js|sendNotify.js|library_" "main"
+ql repo https://github.com/ZokiJava/smzdm_script "smzdm_" "" "env.js|bot.js|library_" "main"
 ```
 
 建议自行更改青龙面板的脚本执行时间

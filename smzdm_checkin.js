@@ -16,7 +16,6 @@ const {
   waitHuman,
   CREATE_CENTER_VIEW
 } = require('./bot');
-const notify = require('./sendNotify');
 const CryptoJS = require('crypto-js');
 
 // ------------------------------------
@@ -361,8 +360,6 @@ function alignDeviceCookie(cookie, deviceId) {
     }
   }
 
-  let notifyContent = '';
-
   for (let i = 0; i < cookies.length; i++) {
     let cookie = cookies[i];
 
@@ -433,14 +430,10 @@ function alignDeviceCookie(cookie, deviceId) {
     $.log(sep);
 
     const bot = new SmzdmCheckinBot(cookie, sk);
-    const msg = await bot.run();
-
-    notifyContent += sep + msg + '\n';
+    await bot.run();
   }
 
   $.log();
-
-  await notify.sendNotify($.name, notifyContent);
 })().catch((e) => {
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {

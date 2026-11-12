@@ -15,7 +15,6 @@ const {
   CREATE_CENTER_VIEW,
   IS_INSTALL_ZHANGDAMA
 } = require('./bot');
-const notify = require('./sendNotify');
 const { SmzdmTaskBot } = require('./library_task');
 
 // ------------------------------------
@@ -218,8 +217,6 @@ class SmzdmNormalTaskBot extends SmzdmTaskBot {
     return;
   }
 
-  let notifyContent = '';
-
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i];
 
@@ -238,14 +235,10 @@ class SmzdmNormalTaskBot extends SmzdmTaskBot {
     $.log(sep);
 
     const bot = new SmzdmNormalTaskBot(cookie);
-    const msg = await bot.run();
-
-    notifyContent += `${sep}${msg}\n`;
+    await bot.run();
   }
 
   $.log();
-
-  await notify.sendNotify($.name, notifyContent);
 })().catch((e) => {
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
